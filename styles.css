@@ -625,7 +625,7 @@ section { padding: clamp(5rem, 10vw, 8rem) 0; }
 
 .footer-layout {
   display: grid;
-  grid-template-columns: 1.6fr 1fr 1.2fr 1.2fr;
+  grid-template-columns: 1.6fr 1fr 1.4fr;
   gap: 3rem;
   padding-top: 4.5rem;
   padding-bottom: 3.5rem;
@@ -696,7 +696,7 @@ section { padding: clamp(5rem, 10vw, 8rem) 0; }
 /* ============================================================
    RESPONSIVE
    ============================================================ */
-@media (max-width: 1024px) {
+@media (max-width: 860px) {
   .footer-layout {
     grid-template-columns: 1fr 1fr;
     gap: 2.5rem;

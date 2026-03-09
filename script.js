@@ -39,10 +39,8 @@
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
   /* ---------- Scroll-reveal animation ---------- */
-  const revealEls = document.querySelectorAll(
-    '.service-card, .process-step, .about-content, .about-image, .contact-info, .contact-form'
-  );
-
+  // Only animate small discrete card elements — large layout sections
+  // (about, contact) stay fully visible to avoid blank-space bugs.
   const revealObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach(entry => {
@@ -52,14 +50,17 @@
         }
       });
     },
-    { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
+    { threshold: 0, rootMargin: '0px 0px -20px 0px' }
   );
 
-  revealEls.forEach((el, i) => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(24px)';
-    el.style.transition = `opacity 0.6s ease ${i * 0.07}s, transform 0.6s ease ${i * 0.07}s`;
-    revealObserver.observe(el);
+  // Reset stagger index per group so delays never accumulate across sections
+  ['.process-step', '.service-card'].forEach(selector => {
+    document.querySelectorAll(selector).forEach((el, i) => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(22px)';
+      el.style.transition = `opacity 0.55s ease ${i * 0.08}s, transform 0.55s ease ${i * 0.08}s`;
+      revealObserver.observe(el);
+    });
   });
 
   // Inject revealed styles
