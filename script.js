@@ -38,36 +38,6 @@
   const yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  /* ---------- Scroll-reveal animation ---------- */
-  // Only animate small discrete card elements — large layout sections
-  // (about, contact) stay fully visible to avoid blank-space bugs.
-  const revealObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('revealed');
-          revealObserver.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0, rootMargin: '0px 0px -20px 0px' }
-  );
-
-  // Reset stagger index per group so delays never accumulate across sections
-  ['.process-step', '.service-card'].forEach(selector => {
-    document.querySelectorAll(selector).forEach((el, i) => {
-      el.style.opacity = '0';
-      el.style.transform = 'translateY(22px)';
-      el.style.transition = `opacity 0.55s ease ${i * 0.08}s, transform 0.55s ease ${i * 0.08}s`;
-      revealObserver.observe(el);
-    });
-  });
-
-  // Inject revealed styles
-  const styleTag = document.createElement('style');
-  styleTag.textContent = '.revealed { opacity: 1 !important; transform: none !important; }';
-  document.head.appendChild(styleTag);
-
   /* ---------- Contact form — Web3Forms ---------- */
   const form = document.getElementById('contact-form');
   if (form) {

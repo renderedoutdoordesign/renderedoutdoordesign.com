@@ -343,7 +343,10 @@ section { padding: clamp(5rem, 10vw, 8rem) 0; }
 /* ============================================================
    SERVICES
    ============================================================ */
-#services { background: var(--color-sand); }
+#services {
+  background: var(--color-sand);
+  padding-bottom: 3rem;
+}
 
 .services-grid {
   display: grid;
@@ -442,7 +445,10 @@ section { padding: clamp(5rem, 10vw, 8rem) 0; }
 /* ============================================================
    ABOUT
    ============================================================ */
-#about { background: var(--color-forest); }
+#about {
+  background: var(--color-forest);
+  padding-top: 3rem;
+}
 
 .about-layout {
   display: grid;
