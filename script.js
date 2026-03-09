@@ -40,7 +40,7 @@
 
   /* ---------- Scroll-reveal animation ---------- */
   const revealEls = document.querySelectorAll(
-    '.service-card, .portfolio-item, .testimonial-card, .about-content, .about-image, .contact-info, .contact-form'
+    '.service-card, .process-step, .about-content, .about-image, .contact-info, .contact-form'
   );
 
   const revealObserver = new IntersectionObserver(
@@ -52,27 +52,25 @@
         }
       });
     },
-    { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
   );
 
   revealEls.forEach((el, i) => {
     el.style.opacity = '0';
     el.style.transform = 'translateY(24px)';
-    el.style.transition = `opacity 0.55s ease ${i * 0.06}s, transform 0.55s ease ${i * 0.06}s`;
+    el.style.transition = `opacity 0.6s ease ${i * 0.07}s, transform 0.6s ease ${i * 0.07}s`;
     revealObserver.observe(el);
   });
 
-  document.addEventListener('animationend', () => {}, false);
-
-  // Add revealed styles via JS so CSS isn't required
+  // Inject revealed styles
   const styleTag = document.createElement('style');
   styleTag.textContent = '.revealed { opacity: 1 !important; transform: none !important; }';
   document.head.appendChild(styleTag);
 
-  /* ---------- Contact form ---------- */
+  /* ---------- Contact form — Web3Forms ---------- */
   const form = document.getElementById('contact-form');
   if (form) {
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
       // Basic client-side validation
@@ -88,19 +86,35 @@
 
       if (!valid) return;
 
-      // Temporary success feedback (replace with actual form service integration)
-      const btn = form.querySelector('button[type="submit"]');
+      const btn = document.getElementById('submit-btn');
       const original = btn.textContent;
-      btn.textContent = 'Message Sent!';
+      btn.textContent = 'Sending\u2026';
       btn.disabled = true;
-      btn.style.background = '#5a7a5a';
 
-      setTimeout(() => {
-        btn.textContent = original;
+      try {
+        const response = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          body: new FormData(form)
+        });
+        const data = await response.json();
+
+        if (data.success) {
+          form.reset();
+          const successMsg = document.getElementById('form-success');
+          if (successMsg) successMsg.style.display = 'block';
+          btn.style.display = 'none';
+          const note = form.querySelector('.form-note');
+          if (note) note.style.display = 'none';
+        } else {
+          btn.textContent = 'Something went wrong \u2014 please try again';
+          btn.disabled = false;
+          setTimeout(() => { btn.textContent = original; }, 4000);
+        }
+      } catch {
+        btn.textContent = 'Something went wrong \u2014 please try again';
         btn.disabled = false;
-        btn.style.background = '';
-        form.reset();
-      }, 3500);
+        setTimeout(() => { btn.textContent = original; }, 4000);
+      }
     });
   }
 
