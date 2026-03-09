@@ -91,15 +91,15 @@ section { padding: clamp(5rem, 10vw, 8rem) 0; }
 }
 
 .btn-primary {
-  background: var(--color-forest);
+  background: var(--color-gold);
   color: var(--color-white);
-  border-color: var(--color-forest);
+  border-color: var(--color-gold);
 }
 .btn-primary:hover {
-  background: var(--color-sage);
-  border-color: var(--color-sage);
+  background: var(--color-gold-dk);
+  border-color: var(--color-gold-dk);
   transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 8px 28px rgba(196, 146, 77, 0.35);
 }
 
 .btn-gold {
