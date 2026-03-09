@@ -33,6 +33,18 @@
   --max-width:       1200px;
 }
 
+/* ---------- Visibility safeguard — no scroll animations ---------- */
+/* !important overrides any inline opacity:0 set by previously cached JS */
+.service-card,
+.process-step,
+.about-image,
+.about-content,
+.contact-info,
+.contact-form {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
 /* ---------- Reset & Base ---------- */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
